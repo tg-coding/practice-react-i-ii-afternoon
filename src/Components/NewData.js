@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PersonInfo(props) {
+function NewData(props) {
     
     const {user, index} = props
 
@@ -11,24 +11,24 @@ function PersonInfo(props) {
         return(
             <div className='info-container'>
                 <h1 className='userIndex'>
-                    {index + 1}/{user.length}
+                    /{user.length}
                 </h1>
 
                 <div className='userInfo'>
                     <h1 className='personInfo'>
-                        {user[index].name.first} {user[index].name.last}
+                        <input placeholder='First Name'/><input placeholder='Last Name'/>
                     </h1>
 
                     <p>
-                        <strong>From: </strong>{user[index].city}, {user[index].country}
+                        <strong>From: </strong> <input placeholder='City'/><input placeholder='Country'/>
                     </p>
 
                     <p>
-                        <strong>Job Title: </strong>{user[index].title}
+                        <strong>Job Title: </strong><input placeholder='Job Title'/>
                     </p>
 
                     <p>
-                        <strong>Employer: </strong>{user[index].employer}
+                        <strong>Employer: </strong><input placeholder='Employer'/>
                     </p>
 
                     <p>
@@ -36,7 +36,9 @@ function PersonInfo(props) {
                     </p>
 
                     <ol>
-                        {list}
+                    <li><input placeholder='Movie 1'/></li>
+                    <li><input placeholder='Movie 2'/></li>
+                    <li><input placeholder='Movie 3'/></li>
                     </ol>
                 </div>
 
@@ -44,4 +46,4 @@ function PersonInfo(props) {
         )
 } 
 
-export default PersonInfo;
+export default NewData;

@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import data from './data';
 import Header from './Components/Header';
 import PersonInfo from './Components/PersonInfo';
+import NewData from './Components/NewData';
 import Buttons from './Components/Buttons';
+import ButtonsNew from './Components/ButtonsNew'
 import './App.css';
 
 class App extends Component {
@@ -11,64 +13,97 @@ class App extends Component {
     this.state = {
       user: data,
       index: 0,
+      view: 'default'
     };
-
-    this.previousBtn = this.previousBtn.bind(this);
-    this.nextBtn = this.nextBtn.bind(this);
-    this.deleteUser = this.deleteUser.bind(this)
   };
 
-  previousBtn(){
-    if(this.state.index < 2){
-        this.setState({index: this.state.user.length - 1});
-    } else {
-        this.setState({index: this.state.index -= 1})
-    }
+  previousBtn =() => {
+    const length = this.state.user.length;
+    const index = this.state.index;
+
+    this.setState({index: (index == 0) && length - 1 || index - 1})
   };
 
-  nextBtn(){
-    if(this.state.index > 23){
-        this.setState({index: 0});
-    } else {
-        this.setState({index: this.state.index += 1})
-    }
+  nextBtn = () => {
+    const length = this.state.user.length;
+    const index = this.state.index;
+
+    this.setState({index: (index + 1) % length})
   };
 
-
-  deleteUser() {
+  deleteUser = () => {
     const deletedUsers = this.state.user
-    deletedUsers.splice(this.state.index, 1)
-    this.setState({user: deletedUsers})
+    
+    if(this.state.user.length > 1){
+      deletedUsers.splice(this.state.index, 1)
+      this.setState({user: deletedUsers})
+    }
   };
+ 
+  newUser = () => {
+    this.setState({view: 'new'})
+  }
 
-
-  // deleteUser() {
-  //   const filteredUsers = this.state.user.filter(element => element.id !== this.state.index)
-  //   this.setState({user: filteredUsers, index: this.state.index})
+  // handleChange = e => {
+  //   let { value } = e.target;
+  //   this.setState({ [e.target.name]: value });
   // };
 
- 
+  // submitUser = () => {
+  //   const { title, img, content, id, posts } = this.state;
+  //   this.setState({
+  //     posts: [
+  //       {
+  //         id,
+  //         title,
+  //         img,
+  //         content
+  //       },
+  //       ...posts
+  //     ],
+  //     id: id + 1,
+  //     title: "",
+  //     img: "",
+  //     content: ""
+  //   });
+  // };
 
 
   render(){
-    const {user, index} = this.state;
+    const {user, index, view} = this.state;
+    
+    let display = '';
+
+    if(view === 'default'){
+      display = (
+        <div>
+          <PersonInfo 
+            user={user}
+            index={index}/>
+          <Buttons
+            previousBtn={this.previousBtn}
+            nextBtn={this.nextBtn}
+            deleteUser={this.deleteUser}
+            newUser={this.newUser}/>
+        </div>
+      )
+    } else if (view === 'new'){
+      display = (
+        <div>
+          <NewData 
+            user={user}
+            index={index}/>
+          <ButtonsNew
+            cancelBtn={this.cancelBtn}
+            submitBtn={this.submitBtn}/>
+        </div>
+      )
+    }
 
     return (
       <div className="App">
-       
         <Header/>
-        
-        <PersonInfo 
-          user={user}
-          index={index}
-        />
-        
-        <Buttons
-          previousBtn={this.previousBtn}
-          nextBtn={this.nextBtn}
-          deleteUser={this.deleteUser}
-        />
-      
+        {display}
       </div>
     );
   }

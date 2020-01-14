@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 
 class Buttons extends Component {
     
-
-
-    
     
     render(){
         return(
@@ -14,10 +11,12 @@ class Buttons extends Component {
                 {"<"} Previous
             </button>
                 
-                <div className='edit-btns'>
-                    <button>Edit</button>
-                    <button onClick={()=>this.props.deleteUser()}>Delete</button>
-                    <button>New</button>
+                <div>
+                    <button className='edit-btns'>Edit</button>
+
+                    <button onClick={()=>this.props.deleteUser()} className='edit-btns'>Delete</button>
+
+                    <button onClick={()=>this.props.newUser()} className='edit-btns'>New</button>
                 </div>
                
                 <button className='nav-btn' onClick={()=>this.props.nextBtn()}>
